@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -236,6 +237,53 @@
             background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
         }
+.shortcut-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 64px;
+    height: 40px;
+    border-radius: 20px;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    border: 2px solid #eee;
+    margin: 5px 0;
+    padding: 0 20px;
+    transition: background 0.3s, transform 0.3s;
+    text-decoration: none;
+    font-weight: 500;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+.social-link.baidu { color: #222; }
+.social-link.bilibili { color: #00a1d6; }
+.social-link.zhihu { color: #0084ff; }
+.social-link.csdn { color: #f60; }
+.social-link:hover {
+    background: #f0f8ff;
+    transform: scale(1.08);
+}
+
+/* 响应式：小屏幕自动换行并减小内边距 */
+@media (max-width: 500px) {
+    .shortcut-links {
+        gap: 8px;
+    }
+    .social-link {
+        padding: 0 10px;
+        font-size: 0.95rem;
+        min-width: 48px;
+    }
+}
     </style>
 </head>
 <!-- 导航栏 -->
@@ -253,6 +301,15 @@
             </ul>
         </div>
     </nav>
+<div class="container" style="margin-top: 150px;">
+    <div class="shortcut-links">
+        <a href="https://www.mcnav.net/" target="_blank" class="social-link baidu">MCNav</a>
+        <a href="http://www.xepaper.com/lpb/" target="_blank" class="social-link bilibili">梁平日报</a>
+        <a href="https://tuxun.fun/" target="_blank" class="social-link zhihu">图寻</a>
+        <a href="https://classisland.tech/download" target="_blank" class="social-link csdn">CI</a>
+        <!-- 可继续添加其他网站 -->
+    </div>
+</div>
     <!-- 导航栏结束 -->
     <!-- 主标题区域 -->
     <!-- 主标题区域 -->
