@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -237,19 +238,23 @@
         }
     </style>
 </head>
+<!-- 导航栏 -->
+<!-- ...existing code... -->
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航栏开始 -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">gyhut2.github.io</a>
+            <a href="#" class="logo">xy的主页</a>
             <ul class="favorites-menu">
-                <li><a href="#" class="active">首页</a></li>
-                <li><a href="http://gyhut2.github.io/Bookmarks.html">书签栏</a></li>
-                <li><a href="#">作品集</a></li>
+                <li><a href="https://github.com/gyhut2" target="_blank">GitHub主页</a></li>
+                <li><a href="https://gyhut2.github.io/Bookmarks.html" target="_blank">个人收藏夹</a></li>
+                <li><a href="https://hellogithub.com/" target="_blank">HelloGitHub</a></li>
+                <li><a href="https://gyhut2.github.io/htmlcleaner.html" target="_blank">书签属性清理工具</a></li>
             </ul>
         </div>
     </nav>
-
+    <!-- 导航栏结束 -->
+    <!-- 主标题区域 -->
     <!-- 主标题区域 -->
     <section class="hero">
         <h1 class="main-title">xy的主页</h1>
@@ -267,44 +272,23 @@
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 xy的主页. 保留所有权利.</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-bilibili"></i></a>
-            </div>
         </div>
     </footer>
 
-    <script>
-        // 为导航菜单添加活动状态
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuItems = document.querySelectorAll('.favorites-menu a');
-            
-            menuItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 移除所有活动状态
-                    menuItems.forEach(link => link.classList.remove('active'));
-                    
-                    // 添加当前活动状态
-                    this.classList.add('active');
-                });
-            });
-            
-            // 添加滚动效果
-            window.addEventListener('scroll', function() {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
-                } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                    navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
-                }
-            });
+<script>
+    // 只保留滚动效果
+    document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
