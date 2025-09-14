@@ -287,6 +287,7 @@
     </style>
 </head>
 <!-- 导航栏 -->
+     <div id="luck-today" style="margin: 30px 0; font-size: 1.3rem; color: #16a085; font-weight: bold;"></div>
 <!-- ...existing code... -->
 <body>
     <!-- 导航栏开始 -->
@@ -313,10 +314,10 @@
     <!-- 导航栏结束 -->
     <!-- 主标题区域 -->
     <!-- 主标题区域 -->
-    <section class="hero">
-        <h1 class="main-title">xy的主页</h1>
-        <p class="subtitle">欢迎来到我的网站</p>
-        
+<section class="hero">
+    <h1 class="main-title">xy的主页</h1>
+    <p class="subtitle">你的网络超过了80%的人</p>
+    
         <!-- 装饰元素 -->
         <div class="decorative-element">
             <div class="circle"></div>
@@ -325,12 +326,6 @@
         </div>
     </section>
 
-    <!-- 页脚 -->
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 xy的主页. 保留所有权利.</p>
-        </div>
-    </footer>
 
 <script>
     // 只保留滚动效果
@@ -346,6 +341,33 @@
             }
         });
     });
+        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+                // 每日人品
+        function getDailyLuck() {
+            const today = new Date();
+            const key = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+            let seed = 0;
+            for (let i = 0; i < key.length; i++) {
+                seed += key.charCodeAt(i);
+            }
+            // 简单伪随机算法
+            let luck = Math.abs(Math.sin(seed) * 10000) % 101;
+            return Math.floor(luck);
+        }
+        const luck = getDailyLuck();
+        document.getElementById('luck-today').textContent = '今日人品值：' + luck + ' / 100';
+    });
+
 </script>
 </body>
 </html>
