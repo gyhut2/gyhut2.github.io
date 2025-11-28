@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="images/Avatar.png">
+    <title>xy's Pan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: url('image/panpage.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        
+        .github-link {
+            display: inline-block;
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .github-link:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .search-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .search-input {
+            width: 70%;
+            max-width: 600px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .search-input:focus {
+            border-color: #3498db;
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.2);
+        }
+        
+        .random-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #3498db;
+            font-size: 1.1em;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.7);
+        }
+        
+        .random-link:hover {
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .files-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .file-list {
+            list-style: none;
+            width: 100%;
+        }
+        
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.2s ease;
+        }
+        
+        .file-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .file-name {
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #333;
+            flex-grow: 1;
+        }
+        
+        .file-link {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .file-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .list-header {
+            background: #f8f9fa;
+            padding: 15px 25px;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .search-input {
+                width: 90%;
+            }
+            
+            .file-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .file-link {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>xy's Pan</h1>
+            <h2>个人网盘资源</h2>
+            <a href="https://github.com/gyhut2/gyhut2.github.io" target="_blank" class="github-link">前往 GitHub 仓库</a>
+        </header>
+        
+        <section class="search-section">
+            <input type="text" class="search-input" placeholder="搜索文件..." id="searchInput">
+            <div>
+                <a href="https://gyhut2.github.io/" class="random-link">返回主页</a>
+            </div>
+        </section>
+        
+        <section class="files-container">
+            <div class="list-header">
+                <div>文件名</div>
+                <div>操作</div>
+            </div>
+            <ul class="file-list">
+                <li class="file-item">
+                    <div class="file-name">Introducing Windows 11.mkv</div>
+                    <a href="https://pan.huang1111.cn/s/WzLXoc3" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">Minecraft_2D</div>
+                    <a href="https://pan.huang1111.cn/s/mxQ9lh1" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">Wallpaper-Generator-NEXT-Installer.exe</div>
+                    <a href="https://pan.huang1111.cn/s/75M47Cg" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">SeewoStart-Installer.exe</div>
+                    <a href="https://pan.huang1111.cn/s/laQqKUL" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">LX source</div>
+                    <a href="https://pan.huang1111.cn/s/NkAWAs1" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">Wallpaper of CS II</div>
+                    <a href="https://pan.huang1111.cn/s/E7wYXub" target="_blank" class="file-link">下载</a>
+                </li>
+                <li class="file-item">
+                    <div class="file-name">Wallpaper of Minecraft</div>
+                    <a href="https://pan.huang1111.cn/s/8Qwb6UQ" target="_blank" class="file-link">下载</a>
+                </li>
+            </ul>
+        </section>
+        
+        <div class="footer">
+            © 2023 xy's Pan - 个人网盘资源分享
+        </div>
+    </div>
+    
+    <script>
+        // 搜索功能
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const keyword = this.value.trim().toLowerCase();
+            const fileItems = document.querySelectorAll('.file-item');
+            
+            fileItems.forEach(item => {
+                const fileName = item.querySelector('.file-name').textContent.toLowerCase();
+                if (keyword === '' || fileName.includes(keyword)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        
+        // 为所有外部链接添加target="_blank"属性
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="http"]');
+            links.forEach(link => {
+                if (!link.hasAttribute('target')) {
+                    link.setAttribute('target', '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
