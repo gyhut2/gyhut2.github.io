@@ -153,6 +153,122 @@
             line-height: 1.8;
         }
         
+        /* 回声洞区域 - 缩小版 */
+        .echo-section {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .echo-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .echo-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .echo-display {
+            background: rgba(30, 30, 50, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 3px solid var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .echo-display:hover {
+            background: rgba(30, 30, 50, 0.15);
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .echo-display.active {
+            transform: scale(0.98);
+        }
+        
+        .echo-message {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--text-color);
+            min-height: 1.5em;
+            text-align: center;
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--primary-color);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(52, 152, 219, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+            }
+        }
+        
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(52, 152, 219, 0.5);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
         /* 快捷链接区域 */
         .shortcuts-section {
             width: 100%;
@@ -319,6 +435,15 @@
                 padding: 100px 15px 40px;
             }
             
+            .echo-section {
+                padding: 15px;
+                max-width: 90%;
+            }
+            
+            .echo-message {
+                font-size: 1rem;
+            }
+            
             .shortcut-links {
                 grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             }
@@ -375,6 +500,15 @@
             <div class="luck-section">
                 <h3>今日人品值</h3>
                 <div class="luck-value" id="luckToday">加载中...</div>
+            </div>
+        </section>
+        
+        <!-- 回声洞区域 -->
+        <section class="echo-section">
+            <h2 class="echo-title">回声洞</h2>
+            
+            <div class="echo-display pulse" id="echoDisplay">
+                <div class="echo-message" id="echoMessage">Click Here</div>
             </div>
         </section>
         
@@ -473,7 +607,142 @@
             } else {
                 luckElement.style.color = '#e74c3c'; // 红色
             }
+            
+            // 初始化回声洞
+            initEcho();
         });
+        
+        // 回声洞功能
+        function initEcho() {
+            const echoDisplay = document.getElementById('echoDisplay');
+            const echoMessage = document.getElementById('echoMessage');
+            let isTyping = false;
+            let typingTimeout = null;
+            let messages = [];
+            let isFirstClick = true;
+            
+            // 从外部文件加载消息
+            fetch('echo-messages.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('网络响应不正常');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    messages = data;
+                })
+                .catch(error => {
+                    console.error('加载回声洞消息失败:', error);
+                    // 如果加载失败，使用默认消息
+                    messages = [
+                        "PCL (Pe SSR MRL) NBS!",
+                        "你发现了回声洞的第一个秘密!",
+                        "继续点击，还有更多惊喜...",
+                        "回声会回应你的每一次探索",
+                        "神秘代码: 7X9-2P4-Q1R",
+                        "你感觉到了吗？洞中传来的回响",
+                        "数字矩阵: 01101000 01101001",
+                        "维度之门正在缓缓打开...",
+                        "频率匹配中... 87.3%",
+                        "你听到了远古的低语吗？",
+                        "数据流分析完成",
+                        "量子纠缠态已建立",
+                        "时空坐标: X-23.7, Y-89.2",
+                        "发现隐藏协议",
+                        "能量波动检测中...",
+                        "回声洞深处传来回应",
+                        "你触发了隐藏事件!",
+                        "未知信号正在传输...",
+                        "加密信息已解码",
+                        "欢迎来到回声洞的核心"
+                    ];
+                });
+            
+            // 添加点击事件到显示区域
+            echoDisplay.addEventListener('click', function(e) {
+                // 如果消息数组为空，不执行任何操作
+                if (messages.length === 0) return;
+                
+                // 如果正在打字，先停止
+                if (isTyping) {
+                    clearTimeout(typingTimeout);
+                    isTyping = false;
+                    // 移除光标
+                    const cursor = document.querySelector('.cursor');
+                    if (cursor) cursor.remove();
+                }
+                
+                // 创建涟漪效果
+                createRipple(e);
+                
+                // 激活显示区域
+                echoDisplay.classList.add('active');
+                setTimeout(() => {
+                    echoDisplay.classList.remove('active');
+                }, 300);
+                
+                // 如果是第一次点击，移除脉冲动画
+                if (isFirstClick) {
+                    echoDisplay.classList.remove('pulse');
+                    isFirstClick = false;
+                }
+                
+                // 显示随机消息，带打字机效果
+                showRandomMessage();
+            });
+            
+            // 创建涟漪效果
+            function createRipple(event) {
+                const ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                
+                const rect = echoDisplay.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size / 2;
+                const y = event.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                echoDisplay.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+            
+            // 显示随机消息，带打字机效果
+            function showRandomMessage() {
+                // 清空当前消息
+                echoMessage.textContent = '';
+                
+                // 选择随机消息
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                const text = messages[randomIndex];
+                
+                // 开始打字机效果
+                typeWriter(text, 0);
+            }
+            
+            // 打字机效果函数
+            function typeWriter(text, index) {
+                if (index < text.length) {
+                    isTyping = true;
+                    echoMessage.textContent += text.charAt(index);
+                    typingTimeout = setTimeout(() => {
+                        typeWriter(text, index + 1);
+                    }, 100);
+                } else {
+                    // 打字完成，添加光标
+                    const cursor = document.createElement('span');
+                    cursor.classList.add('cursor');
+                    echoMessage.appendChild(cursor);
+                    isTyping = false;
+                }
+            }
+        }
     </script>
 </body>
 </html>
