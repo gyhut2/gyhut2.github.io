@@ -210,6 +210,11 @@
             transform: scale(0.98);
         }
         
+        .echo-display.typing {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        
         .echo-message {
             font-size: 1.1rem;
             font-weight: bold;
@@ -612,16 +617,16 @@
             initEcho();
         });
         
-        // 回声洞功能
+        // 回声洞功能 - 从外部JSON文件加载数据
         function initEcho() {
             const echoDisplay = document.getElementById('echoDisplay');
             const echoMessage = document.getElementById('echoMessage');
             let isTyping = false;
             let typingTimeout = null;
-            let messages = [];
             let isFirstClick = true;
+            let messages = [];
             
-            // 从外部文件加载消息
+            // 从外部JSON文件加载消息
             fetch('/json/echo-messages.json')
                 .then(response => {
                     if (!response.ok) {
@@ -631,27 +636,25 @@
                 })
                 .then(data => {
                     messages = data;
+                    console.log('回声洞消息加载成功');
                 })
                 .catch(error => {
                     console.error('加载回声洞消息失败:', error);
                     // 如果加载失败，使用默认消息
                     messages = [
-                        "Network Error"
+                        "Failed"
                     ];
                 });
             
             // 添加点击事件到显示区域
             echoDisplay.addEventListener('click', function(e) {
-                // 如果消息数组为空，不执行任何操作
-                if (messages.length === 0) return;
+                // 如果正在打字，不执行任何操作
+                if (isTyping) return;
                 
-                // 如果正在打字，先停止
-                if (isTyping) {
-                    clearTimeout(typingTimeout);
-                    isTyping = false;
-                    // 移除光标
-                    const cursor = document.querySelector('.cursor');
-                    if (cursor) cursor.remove();
+                // 如果消息数组为空，不执行任何操作
+                if (messages.length === 0) {
+                    echoMessage.textContent = "消息加载中...";
+                    return;
                 }
                 
                 // 创建涟漪效果
@@ -709,18 +712,26 @@
             
             // 打字机效果函数
             function typeWriter(text, index) {
-                if (index < text.length) {
+                if (index === 0) {
+                    // 开始打字时，禁用点击
                     isTyping = true;
+                    echoDisplay.classList.add('typing');
+                }
+                
+                if (index < text.length) {
                     echoMessage.textContent += text.charAt(index);
                     typingTimeout = setTimeout(() => {
                         typeWriter(text, index + 1);
                     }, 100);
                 } else {
-                    // 打字完成，添加光标
+                    // 打字完成，添加光标并启用点击
                     const cursor = document.createElement('span');
                     cursor.classList.add('cursor');
                     echoMessage.appendChild(cursor);
+                    
+                    // 打字完成，启用点击
                     isTyping = false;
+                    echoDisplay.classList.remove('typing');
                 }
             }
         }
