@@ -622,7 +622,7 @@
             let isFirstClick = true;
             
             // 从外部文件加载消息
-            fetch('/echo-messages.json')
+            fetch('/json/echo-messages.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('网络响应不正常');
