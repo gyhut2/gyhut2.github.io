@@ -7,6 +7,7 @@
     <title>xy的主页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* 保留所有原有CSS样式不变 */
         * {
             margin: 0;
             padding: 0;
@@ -585,16 +586,30 @@
             }
         });
         
-        // 每日人品值计算
+        // 改进的每日人品值计算 - 每台设备每天不同
         function getDailyLuck() {
+            // 获取日期信息
             const today = new Date();
-            const key = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
-            let seed = 0;
-            for (let i = 0; i < key.length; i++) {
-                seed += key.charCodeAt(i);
+            const dateKey = today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+            
+            // 获取设备特定信息
+            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const language = navigator.language;
+            
+            // 组合种子字符串
+            const seedString = dateKey + userAgent + platform + language;
+            
+            // 使用更复杂的哈希算法
+            let hash = 0;
+            for (let i = 0; i < seedString.length; i++) {
+                const char = seedString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // 转换为32位整数
             }
-            // 简单伪随机算法
-            let luck = Math.abs(Math.sin(seed) * 10000) % 101;
+            
+            // 确保结果在0-100之间
+            let luck = Math.abs(hash) % 101;
             return Math.floor(luck);
         }
         
@@ -605,9 +620,9 @@
             
             // 根据人品值添加不同颜色
             const luckElement = document.getElementById('luckToday');
-            if (luck >= 80) {
+            if (luck >= 60) {
                 luckElement.style.color = '#2ecc71'; // 绿色
-            } else if (luck >= 50) {
+            } else if (luck >= 20) {
                 luckElement.style.color = '#f39c12'; // 橙色
             } else {
                 luckElement.style.color = '#e74c3c'; // 红色
