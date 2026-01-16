@@ -29,6 +29,75 @@
             --lunar-dark-red: #c0392b;
         }
         
+        /* 音乐控制按钮样式 */
+        .music-control {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .music-control:hover {
+            background: rgba(41, 128, 185, 0.9);
+            transform: scale(1.1);
+        }
+        
+        .music-control.playing {
+            background: rgba(46, 204, 113, 0.9);
+        }
+        
+        .music-control.playing:hover {
+            background: rgba(39, 174, 96, 0.9);
+        }
+        
+        /* 农历新年期间的音乐控制按钮样式 */
+        body.lunar-newyear-theme .music-control {
+            background: rgba(231, 76, 60, 0.9);
+        }
+        
+        body.lunar-newyear-theme .music-control:hover {
+            background: rgba(192, 57, 43, 0.9);
+        }
+        
+        body.lunar-newyear-theme .music-control.playing {
+            background: rgba(241, 196, 15, 0.9);
+        }
+        
+        body.lunar-newyear-theme .music-control.playing:hover {
+            background: rgba(213, 172, 13, 0.9);
+        }
+        
+        /* 调整倒计时位置，为音乐按钮腾出空间 */
+        .lunar-countdown {
+            position: fixed;
+            top: 140px; /* 从原来的80px改为140px，为音乐按钮腾出空间 */
+            right: 20px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            font-weight: bold;
+            text-align: center;
+            min-width: 180px;
+            backdrop-filter: blur(5px);
+            border: 2px solid var(--lunar-gold);
+            animation: countdownPulse 2s infinite;
+        }
         body{
             background: url('/images/1.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -829,7 +898,22 @@
                 padding: 18px;
                 z-index: 999;
             }
+
+            /* 音乐控制按钮响应式 */
+            .music-control {
+                top: 70px;
+                right: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
             
+            .lunar-countdown {
+                top: 130px; /* 从原来的70px改为130px */
+                right: 10px;
+                padding: 8px 12px;
+                min-width: 150px;
+            }
             body.lunar-newyear-theme .nav-links {
                 background: rgba(231, 76, 60, 0.98);
             }
@@ -951,7 +1035,22 @@
                 margin: 10px auto;
                 width: 90%;
             }
+
+            .lunar-countdown {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px auto;
+                width: 90%;
+            }
             
+            .music-control {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px auto;
+                display: block;
+            }            
             .lantern {
                 display: none;
             }
@@ -963,6 +1062,10 @@
     </style>
 </head>
 <body>
+    <!-- 音乐控制按钮 -->
+    <button class="music-control" id="musicControl">
+        <i class="fas fa-play"></i>
+    </button>
     <!-- 农历新年倒计时 -->
     <div class="lunar-countdown" id="lunarCountdown">
         <div class="countdown-title" id="countdownTitle">距离2026农历新年</div>
@@ -1437,6 +1540,71 @@
             // 初始化回声洞
             initEcho();
             
+            // 音乐控制功能
+            const musicControl = document.getElementById('musicControl');
+            const bgMusic = new Audio('/music/1.mp3'); // 修改为你的音乐路径
+            
+            // 设置音乐循环播放
+            bgMusic.loop = true;
+            bgMusic.volume = 0.5; // 设置音量50%
+            
+            // 尝试自动播放音乐（可能会被浏览器阻止）
+            let userInteracted = false;
+            
+            // 点击页面任意位置时，允许音乐播放
+            document.addEventListener('click', function() {
+                if (!userInteracted) {
+                    userInteracted = true;
+                    // 如果音乐控制按钮是播放状态，则开始播放
+                    if (musicControl.classList.contains('playing')) {
+                        bgMusic.play().catch(e => console.log("自动播放被阻止:", e));
+                    }
+                }
+            });
+            
+            // 音乐控制按钮点击事件
+            musicControl.addEventListener('click', function(e) {
+                e.stopPropagation(); // 防止事件冒泡到document
+                
+                if (bgMusic.paused) {
+                    // 播放音乐
+                    bgMusic.play().then(() => {
+                        musicControl.classList.add('playing');
+                        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                    }).catch(error => {
+                        console.log("播放失败:", error);
+                        // 如果播放失败，显示提示
+                        alert('请点击页面其他位置后，再点击播放按钮');
+                    });
+                } else {
+                    // 暂停音乐
+                    bgMusic.pause();
+                    musicControl.classList.remove('playing');
+                    musicControl.innerHTML = '<i class="fas fa-play"></i>';
+                }
+                
+                userInteracted = true;
+            });
+            
+            // 农历新年期间自动播放音乐（延迟2秒）
+            if (isLunarNewYearPeriod()) {
+                setTimeout(() => {
+                    if (!bgMusic.paused) return; // 如果已经在播放，则跳过
+                    
+                    // 尝试自动播放
+                    bgMusic.play().then(() => {
+                        musicControl.classList.add('playing');
+                        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                    }).catch(error => {
+                        console.log("农历新年自动播放被阻止:", error);
+                        // 如果自动播放被阻止，显示提示
+                        musicControl.style.animation = 'none';
+                        setTimeout(() => {
+                            musicControl.style.animation = 'countdownPulse 1s infinite';
+                        }, 100);
+                    });
+                }, 2000);
+            }
             // 如果在新年期间，启动烟花效果
             if (isLunarNewYearPeriod()) {
                 new Fireworks();
