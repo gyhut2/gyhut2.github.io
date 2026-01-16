@@ -4,7 +4,7 @@
     <link rel="icon" type="image/png" href="images/logo.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xy的主页 - Happy New Year🎉</title>
+    <title>xy的主页 - 新年快乐🎉</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* 保留所有原有CSS样式不变 */
@@ -23,10 +23,10 @@
             --light-bg: rgba(255, 255, 255, 0.9);
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             /* 农历新年主题色 */
-            --lunar-red: #e53935;
-            --lunar-gold: #ffd700;
-            --lunar-green: #4caf50;
-            --lunar-orange: #ff9800;
+            --lunar-red: #e74c3c;
+            --lunar-gold: #f1c40f;
+            --lunar-green: #27ae60;
+            --lunar-dark-red: #c0392b;
         }
         
         body{
@@ -44,24 +44,8 @@
         
         /* 农历新年主题覆盖样式 */
         body.lunar-newyear-theme {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/images/1.jpg') no-repeat center center fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/1.jpg') no-repeat center center fixed;
             background-size: cover;
-        }
-        
-        /* 添加新年背景装饰 */
-        body.lunar-newyear-theme::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(229, 57, 53, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 40% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 20%);
-            pointer-events: none;
-            z-index: 0;
         }
         
         .container {
@@ -86,8 +70,8 @@
         
         /* 农历新年主题导航栏 */
         body.lunar-newyear-theme .navbar {
-            background: linear-gradient(90deg, var(--lunar-red), var(--lunar-orange));
-            box-shadow: 0 4px 20px rgba(229, 57, 53, 0.4);
+            background: rgba(231, 76, 60, 0.95);
+            box-shadow: 0 4px 20px rgba(231, 76, 60, 0.3);
         }
         
         body.lunar-newyear-theme .logo {
@@ -102,7 +86,7 @@
         body.lunar-newyear-theme .nav-links a:hover,
         body.lunar-newyear-theme .nav-links a.active {
             background: rgba(255, 255, 255, 0.2);
-            color: var(--lunar-gold);
+            color: white;
         }
         
         body.lunar-newyear-theme .hamburger {
@@ -195,10 +179,6 @@
         body.lunar-newyear-theme .main-title {
             color: white;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            background: linear-gradient(to right, var(--lunar-gold), var(--lunar-red));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .main-title::after {
@@ -215,7 +195,6 @@
         
         body.lunar-newyear-theme .main-title::after {
             background: linear-gradient(to right, var(--lunar-gold), var(--lunar-red));
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
         .subtitle {
@@ -228,7 +207,7 @@
         }
         
         body.lunar-newyear-theme .subtitle {
-            color: var(--lunar-gold);
+            color: white;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
         
@@ -248,22 +227,8 @@
         
         body.lunar-newyear-theme .echo-section {
             background: rgba(255, 255, 255, 0.95);
-            border: 2px solid var(--lunar-red);
-            box-shadow: 0 6px 20px rgba(229, 57, 53, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body.lunar-newyear-theme .echo-section::before {
-            content: '福';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(180deg);
-            font-size: 120px;
-            font-weight: bold;
-            color: rgba(229, 57, 53, 0.1);
-            z-index: 0;
+            border: 2px solid var(--lunar-gold);
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.3);
         }
         
         .echo-section::before {
@@ -288,7 +253,6 @@
         
         body.lunar-newyear-theme .echo-title {
             color: var(--lunar-red);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .echo-display {
@@ -313,7 +277,7 @@
         }
         
         body.lunar-newyear-theme .echo-display {
-            background: rgba(229, 57, 53, 0.1);
+            background: rgba(231, 76, 60, 0.1);
             border-left: 3px solid var(--lunar-red);
         }
         
@@ -323,9 +287,8 @@
         }
         
         body.lunar-newyear-theme .echo-display:hover {
-            background: rgba(229, 57, 53, 0.2);
+            background: rgba(231, 76, 60, 0.2);
             border-left: 3px solid var(--lunar-gold);
-            transform: translateY(-3px);
         }
         
         .echo-display.active {
@@ -351,10 +314,6 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-        }
-        
-        body.lunar-newyear-theme .echo-message {
-            color: var(--lunar-red);
         }
         
         .cursor {
@@ -430,7 +389,6 @@
         body.lunar-newyear-theme .luck-section {
             background: rgba(255, 255, 255, 0.95);
             border: 2px solid var(--lunar-gold);
-            box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
         }
         
         .luck-value {
@@ -457,21 +415,7 @@
         body.lunar-newyear-theme .shortcuts-section {
             background: rgba(255, 255, 255, 0.95);
             border: 3px solid var(--lunar-red);
-            box-shadow: 0 8px 25px rgba(229, 57, 53, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        body.lunar-newyear-theme .shortcuts-section::after {
-            content: '新春快乐';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--lunar-red);
-            opacity: 0.6;
-            transform: rotate(15deg);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.2);
         }
         
         .shortcuts-section::before {
@@ -486,7 +430,7 @@
         }
         
         body.lunar-newyear-theme .shortcuts-section::before {
-            background: linear-gradient(to right, var(--lunar-red), var(--lunar-gold), var(--lunar-green));
+            background: linear-gradient(to right, var(--lunar-red), var(--lunar-gold));
         }
         
         .shortcuts-section h2 {
@@ -554,8 +498,7 @@
         
         body.lunar-newyear-theme .shortcut-link:hover {
             border-color: var(--lunar-red);
-            box-shadow: 0 10px 25px rgba(229, 57, 53, 0.2);
-            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.2);
         }
         
         .shortcut-icon {
@@ -613,7 +556,7 @@
         }
         
         body.lunar-newyear-theme footer {
-            background: linear-gradient(to right, var(--lunar-red), var(--lunar-orange));
+            background: var(--lunar-red);
         }
         
         .footer-content {
@@ -649,11 +592,11 @@
         /* ========== 农历新年效果样式 ========== */
         
         /* 农历新年倒计时 */
-        .lunar-newyear-countdown {
+        .lunar-countdown {
             position: fixed;
             top: 80px;
             right: 20px;
-            background: linear-gradient(135deg, var(--lunar-red), var(--lunar-orange));
+            background: rgba(231, 76, 60, 0.9);
             color: white;
             padding: 12px 20px;
             border-radius: 10px;
@@ -661,7 +604,7 @@
             z-index: 1001;
             font-weight: bold;
             text-align: center;
-            min-width: 150px;
+            min-width: 180px;
             backdrop-filter: blur(5px);
             border: 2px solid var(--lunar-gold);
             animation: countdownPulse 2s infinite;
@@ -672,26 +615,26 @@
             50% { transform: scale(1.05); }
         }
         
-        .lunar-countdown-title {
+        .countdown-title {
             font-size: 0.9rem;
             margin-bottom: 5px;
             color: var(--lunar-gold);
         }
         
-        .lunar-countdown-time {
+        .countdown-time {
             font-size: 1.3rem;
             color: white;
         }
         
         /* 农历新年祝福语 */
-        .lunar-newyear-greeting {
+        .lunar-greeting {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, var(--lunar-red), var(--lunar-orange));
+            background: rgba(231, 76, 60, 0.95);
             color: white;
-            padding: 25px 30px;
+            padding: 20px 30px;
             border-radius: 15px;
             z-index: 2000;
             text-align: center;
@@ -708,220 +651,79 @@
             100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
         
-        .lunar-greeting-title {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
+        .greeting-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
             color: var(--lunar-gold);
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
-        .lunar-greeting-text {
+        .greeting-text {
             margin-bottom: 15px;
             line-height: 1.5;
-            font-size: 1.1rem;
         }
         
         .close-greeting {
             background: var(--lunar-gold);
             color: var(--lunar-red);
             border: none;
-            padding: 10px 25px;
+            padding: 8px 20px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1rem;
         }
         
         .close-greeting:hover {
             background: white;
             transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         
-        /* 春联效果 */
-        .spring-couplet {
+        /* 福字装饰 */
+        .fu-character {
             position: fixed;
+            font-size: 5rem;
+            color: var(--lunar-red);
+            opacity: 0.2;
+            z-index: 0;
+            user-select: none;
+            pointer-events: none;
+            font-family: "Microsoft YaHei", serif;
+            font-weight: bold;
+        }
+        
+        .fu-character.top-left {
             top: 100px;
-            width: 180px;
-            height: 400px;
-            z-index: 999;
-            display: none;
+            left: 50px;
+            transform: rotate(-15deg);
         }
         
-        .spring-couplet.left {
-            left: 20px;
-            transform: rotate(-5deg);
+        .fu-character.top-right {
+            top: 100px;
+            right: 50px;
+            transform: rotate(15deg);
         }
         
-        .spring-couplet.right {
-            right: 20px;
-            transform: rotate(5deg);
+        .fu-character.bottom-left {
+            bottom: 100px;
+            left: 50px;
+            transform: rotate(15deg);
         }
         
-        .couplet-paper {
-            width: 100%;
-            height: 100%;
-            background: var(--lunar-red);
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--lunar-gold);
-            overflow: hidden;
-        }
-        
-        .couplet-paper::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: var(--lunar-gold);
-            border-radius: 8px 8px 0 0;
-        }
-        
-        .couplet-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: var(--lunar-gold);
-            font-size: 2rem;
-            font-weight: bold;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            letter-spacing: 10px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* 红包效果 */
-        .red-envelope {
-            position: fixed;
-            top: -100px;
-            width: 60px;
-            height: 80px;
-            z-index: 999;
-            cursor: pointer;
-            animation: fall linear forwards;
-            transform-origin: center;
-        }
-        
-        @keyframes fall {
-            to {
-                transform: translateY(calc(100vh + 100px)) rotate(360deg);
-            }
-        }
-        
-        .envelope-body {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--lunar-red), #c62828);
-            border-radius: 10px 10px 20px 20px;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        .envelope-body::before {
-            content: '福';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--lunar-gold);
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-        
-        .envelope-body::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 15px;
-            background: var(--lunar-gold);
-            border-radius: 5px;
-        }
-        
-        .envelope-gold-seal {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background: var(--lunar-gold);
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* 红包打开效果 */
-        .red-envelope.open {
-            animation: openEnvelope 0.5s forwards;
-        }
-        
-        @keyframes openEnvelope {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(0) rotate(180deg); opacity: 0; }
-        }
-        
-        .envelope-blessing {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, var(--lunar-red), var(--lunar-orange));
-            color: var(--lunar-gold);
-            padding: 15px 25px;
-            border-radius: 10px;
-            z-index: 2001;
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            border: 2px solid var(--lunar-gold);
-            display: none;
-            animation: blessingAppear 0.5s ease-out;
-        }
-        
-        @keyframes blessingAppear {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-        
-        /* 烟花效果容器 */
-        .fireworks-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        /* 烟花粒子 */
-        .firework-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            pointer-events: none;
+        .fu-character.bottom-right {
+            bottom: 100px;
+            right: 50px;
+            transform: rotate(-15deg);
         }
         
         /* 灯笼效果 */
         .lantern {
             position: fixed;
-            top: 20px;
-            width: 70px;
-            height: 90px;
+            top: 10px;
+            width: 60px;
+            height: 80px;
             z-index: 1000;
             animation: lanternSwing 4s infinite ease-in-out;
-            display: none;
         }
         
         .lantern-left {
@@ -939,32 +741,32 @@
         
         .lantern-body {
             width: 100%;
-            height: 80px;
-            background: linear-gradient(to bottom, var(--lunar-red), #c62828);
-            border-radius: 35px 35px 15px 15px;
+            height: 70px;
+            background: var(--lunar-red);
+            border-radius: 30px 30px 10px 10px;
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .lantern-body::before {
-            content: '';
+            content: '春';
             position: absolute;
-            top: -10px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 15px;
-            background: var(--lunar-gold);
-            border-radius: 5px;
+            transform: translate(-50%, -50%);
+            color: var(--lunar-gold);
+            font-size: 1.8rem;
+            font-weight: bold;
+            font-family: "Microsoft YaHei", serif;
         }
         
         .lantern-body::after {
             content: '';
             position: absolute;
-            bottom: -25px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
+            width: 30px;
             height: 20px;
             background: var(--lunar-gold);
             border-radius: 0 0 10px 10px;
@@ -972,12 +774,12 @@
         
         .lantern-tassel {
             position: absolute;
-            bottom: -60px;
+            bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
             width: 4px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--lunar-gold), #ffcc00);
+            height: 40px;
+            background: var(--lunar-gold);
         }
         
         .lantern-tassel::after {
@@ -986,10 +788,21 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             background: var(--lunar-gold);
             border-radius: 50%;
+        }
+        
+        /* 烟花Canvas容器 */
+        .fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
         
         /* 响应式设计 */
@@ -1018,7 +831,7 @@
             }
             
             body.lunar-newyear-theme .nav-links {
-                background: linear-gradient(135deg, var(--lunar-red), var(--lunar-orange));
+                background: rgba(231, 76, 60, 0.98);
             }
             
             .nav-links.active {
@@ -1065,29 +878,52 @@
             }
             
             /* 农历新年效果响应式 */
-            .lunar-newyear-countdown {
+            .lunar-countdown {
                 top: 70px;
                 right: 10px;
                 padding: 8px 12px;
-                min-width: 120px;
-                font-size: 0.9rem;
+                min-width: 150px;
             }
             
-            .lunar-countdown-time {
+            .countdown-time {
                 font-size: 1.1rem;
             }
             
-            .spring-couplet {
-                display: none !important;
-            }
-            
             .lantern {
-                display: none !important;
+                width: 40px;
+                height: 60px;
             }
             
-            .red-envelope {
-                width: 50px;
-                height: 70px;
+            .lantern-left {
+                left: 15px;
+            }
+            
+            .lantern-right {
+                right: 15px;
+            }
+            
+            .fu-character {
+                font-size: 3rem;
+            }
+            
+            .fu-character.top-left {
+                top: 120px;
+                left: 20px;
+            }
+            
+            .fu-character.top-right {
+                top: 120px;
+                right: 20px;
+            }
+            
+            .fu-character.bottom-left {
+                bottom: 120px;
+                left: 20px;
+            }
+            
+            .fu-character.bottom-right {
+                bottom: 120px;
+                right: 20px;
             }
         }
         
@@ -1108,42 +944,43 @@
                 font-size: 1.6rem;
             }
             
-            .lunar-newyear-countdown {
+            .lunar-countdown {
                 position: relative;
                 top: auto;
                 right: auto;
                 margin: 10px auto;
                 width: 90%;
             }
+            
+            .lantern {
+                display: none;
+            }
+            
+            .fu-character {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 农历新年倒计时 -->
-    <div class="lunar-newyear-countdown" id="lunarNewyearCountdown">
-        <div class="lunar-countdown-title">2026农历新年倒计时</div>
-        <div class="lunar-countdown-time" id="lunarCountdownTime">计算中...</div>
+    <div class="lunar-countdown" id="lunarCountdown">
+        <div class="countdown-title" id="countdownTitle">距离2026农历新年</div>
+        <div class="countdown-time" id="countdownTime">计算中...</div>
     </div>
     
     <!-- 农历新年祝福语弹窗 -->
-    <div class="lunar-newyear-greeting" id="lunarNewyearGreeting">
-        <div class="lunar-greeting-title">🐲 新年快乐！</div>
-        <div class="lunar-greeting-text" id="lunarGreetingText">祝您2026农历新年：龙马精神，万事如意！</div>
-        <button class="close-greeting" id="closeLunarGreeting">收下祝福</button>
+    <div class="lunar-greeting" id="lunarGreeting">
+        <div class="greeting-title">🐉 2026新年快乐！</div>
+        <div class="greeting-text" id="greetingText">祝您龙年大吉，万事如意！</div>
+        <button class="close-greeting" id="closeGreeting">关闭</button>
     </div>
     
-    <!-- 春联 -->
-    <div class="spring-couplet left" id="springCoupletLeft">
-        <div class="couplet-paper">
-            <div class="couplet-text">迎春接福</div>
-        </div>
-    </div>
-    
-    <div class="spring-couplet right" id="springCoupletRight">
-        <div class="couplet-paper">
-            <div class="couplet-text">万事如意</div>
-        </div>
-    </div>
+    <!-- 福字装饰 -->
+    <div class="fu-character top-left">福</div>
+    <div class="fu-character top-right">福</div>
+    <div class="fu-character bottom-left">福</div>
+    <div class="fu-character bottom-right">福</div>
     
     <!-- 灯笼 -->
     <div class="lantern lantern-left">
@@ -1156,11 +993,8 @@
         <div class="lantern-tassel"></div>
     </div>
     
-    <!-- 红包祝福语显示 -->
-    <div class="envelope-blessing" id="envelopeBlessing"></div>
-    
-    <!-- 烟花容器 -->
-    <div class="fireworks-container" id="fireworksContainer"></div>
+    <!-- 烟花Canvas -->
+    <canvas class="fireworks-canvas" id="fireworksCanvas"></canvas>
     
     <!-- 导航栏 -->
     <nav class="navbar">
@@ -1178,7 +1012,7 @@
                 <li><a href="https://www.bilibili.com/video/BV1uT4y1P7CX/?share_source=copy_web&vd_source=c7ff965564452abc8760062194610703" target="_blank"><i class="fa-duotone fa-solid fa-question"></i> ???</a></li>
             </ul>
         </div>
-    </nav>
+</nav>
 
     <!-- 主内容区域 -->
     <main class="main-content">
@@ -1252,60 +1086,40 @@
     </footer>
 
     <script>
-        // 2026农历新年（春节）是2026年2月17日
-        const LUNAR_NEW_YEAR_2026 = new Date('2026-02-17T00:00:00');
+        // 2026年农历新年（春节）日期：2026年2月17日，星期二
+        const LUNAR_NEW_YEAR_2026 = new Date(2026, 1, 17); // 注意：月份是从0开始的，1表示2月
         
-        // 检查是否在农历新年期间（春节前后各15天）
+        // 检查是否在农历新年期间（春节前7天到元宵节）
         function isLunarNewYearPeriod() {
             const now = new Date();
-            const startDate = new Date(LUNAR_NEW_YEAR_2026);
-            startDate.setDate(startDate.getDate() - 15); // 春节前15天开始
+            const lunarNewYearStart = new Date(LUNAR_NEW_YEAR_2026);
+            lunarNewYearStart.setDate(lunarNewYearStart.getDate() - 7); // 春节前7天开始
             
-            const endDate = new Date(LUNAR_NEW_YEAR_2026);
-            endDate.setDate(endDate.getDate() + 15); // 春节后15天结束
+            const lunarNewYearEnd = new Date(LUNAR_NEW_YEAR_2026);
+            lunarNewYearEnd.setDate(lunarNewYearEnd.getDate() + 15); // 元宵节结束（春节后15天）
             
-            return now >= startDate && now <= endDate;
+            return now >= lunarNewYearStart && now <= lunarNewYearEnd;
         }
         
-        // 如果在农历新年期间，应用农历新年主题
+        // 如果在新年期间，应用农历新年主题
         if (isLunarNewYearPeriod()) {
             document.body.classList.add('lunar-newyear-theme');
             
-            // 显示灯笼
-            document.querySelectorAll('.lantern').forEach(lantern => {
-                lantern.style.display = 'block';
-            });
-            
-            // 显示春联（仅在大屏幕上）
-            if (window.innerWidth > 768) {
-                document.getElementById('springCoupletLeft').style.display = 'block';
-                document.getElementById('springCoupletRight').style.display = 'block';
-            }
+            // 更新页面标题
+            document.title = "xy的主页 - 2026农历新年快乐";
             
             // 显示农历新年祝福弹窗（首次访问时）
-            if (!localStorage.getItem('lunarNewyearGreetingShown2026')) {
+            if (!localStorage.getItem('lunarGreetingShown2026')) {
                 setTimeout(() => {
-                    document.getElementById('lunarNewyearGreeting').style.display = 'block';
-                    localStorage.setItem('lunarNewyearGreetingShown2026', 'true');
+                    document.getElementById('lunarGreeting').style.display = 'block';
+                    localStorage.setItem('lunarGreetingShown2026', 'true');
                 }, 2000);
             }
-            
-            // 启动红包雨效果
-            setTimeout(() => {
-                startRedEnvelopeRain();
-            }, 3000);
-            
-            // 启动烟花效果
-            setTimeout(() => {
-                createLunarNewYearFireworks();
-            }, 1000);
         }
         
         // 关闭农历新年祝福弹窗
-        document.getElementById('closeLunarGreeting').addEventListener('click', function() {
-            document.getElementById('lunarNewyearGreeting').style.display = 'none';
-            // 关闭弹窗后开始红包雨
-            startRedEnvelopeRain();
+        document.getElementById('closeGreeting').addEventListener('click', function() {
+            document.getElementById('lunarGreeting').style.display = 'none';
         });
         
         // 农历新年倒计时
@@ -1319,263 +1133,26 @@
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
                 
-                document.getElementById('lunarCountdownTime').textContent = 
+                document.getElementById('countdownTime').textContent = 
                     `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+                
+                // 更新标题
+                if (days > 0) {
+                    document.getElementById('countdownTitle').textContent = `距离2026农历新年（龙年）`;
+                } else {
+                    document.getElementById('countdownTitle').textContent = `2026农历新年快乐！`;
+                    document.getElementById('countdownTime').textContent = `龙年大吉！`;
+                }
             } else {
                 // 农历新年已过，显示新年祝福
-                const daysPassed = Math.floor(Math.abs(timeDiff) / (1000 * 60 * 60 * 24));
-                if (daysPassed <= 15) {
-                    document.getElementById('lunarNewyearCountdown').innerHTML = `
-                        <div class="lunar-countdown-title">🎉 新年快乐！</div>
-                        <div class="lunar-countdown-time">春节已到来！</div>
-                    `;
-                } else {
-                    document.getElementById('lunarNewyearCountdown').innerHTML = `
-                        <div class="lunar-countdown-title">🐲 龙年大吉</div>
-                        <div class="lunar-countdown-time">2026农历新年</div>
-                    `;
-                }
+                document.getElementById('countdownTitle').textContent = `🎉 2026农历新年快乐！`;
+                document.getElementById('countdownTime').textContent = `龙年大吉，万事如意！`;
             }
         }
         
         // 更新倒计时
         updateLunarNewYearCountdown();
         setInterval(updateLunarNewYearCountdown, 1000);
-        
-        // 红包雨效果
-        function startRedEnvelopeRain() {
-            // 只在农历新年期间显示
-            if (!isLunarNewYearPeriod()) return;
-            
-            // 红包祝福语
-            const blessings = [
-                "恭喜发财", "龙马精神", "万事如意", "身体健康",
-                "步步高升", "财源广进", "阖家欢乐", "年年有余",
-                "福星高照", "吉祥如意", "心想事成", "大吉大利"
-            ];
-            
-            // 创建红包
-            function createRedEnvelope() {
-                const envelope = document.createElement('div');
-                envelope.className = 'red-envelope';
-                
-                // 随机位置
-                const leftPos = Math.random() * (window.innerWidth - 60);
-                envelope.style.left = `${leftPos}px`;
-                
-                // 随机下落速度
-                const duration = Math.random() * 8 + 5; // 5-13秒
-                envelope.style.animationDuration = `${duration}s`;
-                
-                // 红包内容
-                envelope.innerHTML = `
-                    <div class="envelope-body"></div>
-                    <div class="envelope-gold-seal"></div>
-                `;
-                
-                document.body.appendChild(envelope);
-                
-                // 点击红包事件
-                envelope.addEventListener('click', function() {
-                    if (this.classList.contains('open')) return;
-                    
-                    this.classList.add('open');
-                    
-                    // 随机选择一个祝福语
-                    const blessing = blessings[Math.floor(Math.random() * blessings.length)];
-                    
-                    // 显示祝福语
-                    const blessingElement = document.getElementById('envelopeBlessing');
-                    blessingElement.textContent = blessing;
-                    blessingElement.style.display = 'block';
-                    
-                    // 3秒后隐藏祝福语
-                    setTimeout(() => {
-                        blessingElement.style.display = 'none';
-                    }, 3000);
-                    
-                    // 播放音效（如果有）
-                    playRedEnvelopeSound();
-                    
-                    // 移除红包
-                    setTimeout(() => {
-                        if (this.parentNode) {
-                            this.parentNode.removeChild(this);
-                        }
-                    }, 500);
-                });
-                
-                // 红包下落结束后移除
-                setTimeout(() => {
-                    if (envelope.parentNode && !envelope.classList.contains('open')) {
-                        envelope.parentNode.removeChild(envelope);
-                    }
-                }, duration * 1000);
-            }
-            
-            // 初始创建一些红包
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    createRedEnvelope();
-                }, i * 1000);
-            }
-            
-            // 定时创建新红包
-            const envelopeInterval = setInterval(() => {
-                if (isLunarNewYearPeriod()) {
-                    createRedEnvelope();
-                } else {
-                    clearInterval(envelopeInterval);
-                }
-            }, 2000);
-        }
-        
-        // 播放红包音效
-        function playRedEnvelopeSound() {
-            // 创建音效（如果没有音频文件，使用简单的Web Audio API）
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
-                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
-                
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-                
-                oscillator.start();
-                oscillator.stop(audioContext.currentTime + 0.5);
-            } catch (e) {
-                console.log("音频播放失败，但红包效果正常");
-            }
-        }
-        
-        // 农历新年烟花效果
-        function createLunarNewYearFireworks() {
-            // 只在农历新年期间显示
-            if (!isLunarNewYearPeriod()) return;
-            
-            const container = document.getElementById('fireworksContainer');
-            
-            // 创建烟花
-            function createFirework(x, y) {
-                const particleCount = 80;
-                const colors = [
-                    '#e53935', // 红色
-                    '#ffd700', // 金色
-                    '#4caf50', // 绿色
-                    '#2196f3', // 蓝色
-                    '#ff9800'  // 橙色
-                ];
-                
-                // 创建烟花中心
-                const center = document.createElement('div');
-                center.style.position = 'fixed';
-                center.style.left = `${x}px`;
-                center.style.top = `${y}px`;
-                center.style.width = '6px';
-                center.style.height = '6px';
-                center.style.borderRadius = '50%';
-                center.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                center.style.boxShadow = '0 0 10px currentColor';
-                center.style.zIndex = '1';
-                
-                container.appendChild(center);
-                
-                // 中心爆炸效果
-                const centerAnimation = center.animate([
-                    { transform: 'scale(0.5)', opacity: 1 },
-                    { transform: 'scale(1.5)', opacity: 0 }
-                ], {
-                    duration: 500,
-                    easing: 'ease-out'
-                });
-                
-                centerAnimation.onfinish = () => {
-                    if (center.parentNode) {
-                        center.parentNode.removeChild(center);
-                    }
-                };
-                
-                // 创建烟花粒子
-                for (let i = 0; i < particleCount; i++) {
-                    setTimeout(() => {
-                        const particle = document.createElement('div');
-                        particle.className = 'firework-particle';
-                        particle.style.left = `${x}px`;
-                        particle.style.top = `${y}px`;
-                        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                        particle.style.boxShadow = `0 0 5px ${particle.style.backgroundColor}`;
-                        
-                        container.appendChild(particle);
-                        
-                        // 粒子动画
-                        const angle = Math.random() * Math.PI * 2;
-                        const distance = Math.random() * 150 + 50;
-                        const duration = Math.random() * 1000 + 1000;
-                        
-                        const animation = particle.animate([
-                            { 
-                                transform: 'translate(0, 0) scale(1)', 
-                                opacity: 1 
-                            },
-                            { 
-                                transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, 
-                                opacity: 0 
-                            }
-                        ], {
-                            duration: duration,
-                            easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
-                        });
-                        
-                        animation.onfinish = () => {
-                            if (particle.parentNode) {
-                                particle.parentNode.removeChild(particle);
-                            }
-                        };
-                    }, i * 10);
-                }
-            }
-            
-            // 随机位置创建烟花
-            function createRandomFirework() {
-                const x = Math.random() * (window.innerWidth - 100) + 50;
-                const y = Math.random() * (window.innerHeight / 2) + 50;
-                createFirework(x, y);
-            }
-            
-            // 初始烟花
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    createRandomFirework();
-                }, i * 800);
-            }
-            
-            // 定时创建烟花
-            const fireworkInterval = setInterval(() => {
-                if (isLunarNewYearPeriod()) {
-                    // 随机决定是否创建烟花（70%概率）
-                    if (Math.random() < 0.7) {
-                        createRandomFirework();
-                    }
-                } else {
-                    clearInterval(fireworkInterval);
-                }
-            }, 2000);
-            
-            // 点击页面创建烟花
-            document.addEventListener('click', function(e) {
-                if (isLunarNewYearPeriod() && e.target.className !== 'red-envelope' && 
-                    !e.target.closest('.red-envelope') && Math.random() < 0.3) {
-                    createFirework(e.clientX, e.clientY);
-                }
-            });
-        }
         
         // 移动端菜单切换
         const hamburger = document.getElementById('hamburger');
@@ -1593,12 +1170,12 @@
             const navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
                 navbar.style.background = document.body.classList.contains('lunar-newyear-theme')
-                    ? 'linear-gradient(90deg, var(--lunar-red), var(--lunar-orange))'
+                    ? 'rgba(231, 76, 60, 0.98)'
                     : 'rgba(255, 255, 255, 0.98)';
                 navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.15)';
             } else {
                 navbar.style.background = document.body.classList.contains('lunar-newyear-theme')
-                    ? 'linear-gradient(90deg, var(--lunar-red), var(--lunar-orange))'
+                    ? 'rgba(231, 76, 60, 0.95)'
                     : 'rgba(255, 255, 255, 0.95)';
                 navbar.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.1)';
             }
@@ -1637,6 +1214,211 @@
             return Math.floor(luck);
         }
         
+        // Canvas烟花效果
+        class Fireworks {
+            constructor() {
+                this.canvas = document.getElementById('fireworksCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.fireworks = [];
+                this.hue = 120;
+                this.limiterTotal = 5;
+                this.limiterTick = 0;
+                this.mx = 0;
+                this.my = 0;
+                this.tick = 0;
+                
+                this.init();
+                this.animate();
+                
+                // 窗口大小调整
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // 鼠标移动事件
+                this.canvas.addEventListener('mousemove', (e) => {
+                    this.mx = e.clientX;
+                    this.my = e.clientY;
+                });
+                
+                // 触摸事件
+                this.canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    this.mx = e.touches[0].clientX;
+                    this.my = e.touches[0].clientY;
+                });
+            }
+            
+            init() {
+                this.resizeCanvas();
+                
+                // 创建初始烟花
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        this.createFirework();
+                    }, i * 500);
+                }
+            }
+            
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            createFirework(x = Math.random() * this.canvas.width, y = this.canvas.height) {
+                const targetX = x;
+                const targetY = Math.random() * (this.canvas.height / 2);
+                
+                this.fireworks.push({
+                    x: x,
+                    y: y,
+                    targetX: targetX,
+                    targetY: targetY,
+                    speed: 2 + Math.random() * 2,
+                    acceleration: 1.05,
+                    hue: Math.floor(Math.random() * 360),
+                    brightness: 70,
+                    alpha: 1,
+                    trail: []
+                });
+            }
+            
+            createParticles(x, y, hue) {
+                const particleCount = 100;
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push({
+                        x: x,
+                        y: y,
+                        velocityX: Math.random() * 10 - 5,
+                        velocityY: Math.random() * 10 - 5,
+                        gravity: 0.05,
+                        resistance: 0.97,
+                        size: Math.random() * 2 + 1,
+                        hue: hue,
+                        brightness: 50 + Math.random() * 50,
+                        alpha: 1,
+                        decay: 0.015 + Math.random() * 0.02
+                    });
+                }
+            }
+            
+            drawFirework(firework) {
+                // 绘制轨迹
+                this.ctx.beginPath();
+                this.ctx.moveTo(firework.x, firework.y);
+                
+                for (let i = 0; i < firework.trail.length; i++) {
+                    this.ctx.lineTo(firework.trail[i].x, firework.trail[i].y);
+                }
+                
+                this.ctx.strokeStyle = `hsla(${firework.hue}, 100%, ${firework.brightness}%, ${firework.alpha})`;
+                this.ctx.lineWidth = 2;
+                this.ctx.stroke();
+                
+                // 绘制烟花头
+                this.ctx.beginPath();
+                this.ctx.arc(firework.x, firework.y, 3, 0, Math.PI * 2);
+                this.ctx.fillStyle = `hsla(${firework.hue}, 100%, ${firework.brightness}%, ${firework.alpha})`;
+                this.ctx.fill();
+            }
+            
+            drawParticle(particle) {
+                this.ctx.beginPath();
+                this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                this.ctx.fillStyle = `hsla(${particle.hue}, 100%, ${particle.brightness}%, ${particle.alpha})`;
+                this.ctx.fill();
+            }
+            
+            updateFirework(firework, index) {
+                // 移除轨迹中旧的点
+                firework.trail.push({x: firework.x, y: firework.y});
+                if (firework.trail.length > 10) {
+                    firework.trail.shift();
+                }
+                
+                // 计算到目标的距离
+                const distanceX = firework.targetX - firework.x;
+                const distanceY = firework.targetY - firework.y;
+                const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+                
+                // 计算角度
+                const angle = Math.atan2(distanceY, distanceX);
+                
+                // 更新位置
+                firework.x += Math.cos(angle) * firework.speed;
+                firework.y += Math.sin(angle) * firework.speed;
+                
+                // 增加速度
+                firework.speed *= firework.acceleration;
+                
+                // 如果接近目标，爆炸
+                if (distance < 10) {
+                    this.createParticles(firework.x, firework.y, firework.hue);
+                    this.fireworks.splice(index, 1);
+                }
+            }
+            
+            updateParticle(particle, index) {
+                // 更新位置
+                particle.x += particle.velocityX;
+                particle.y += particle.velocityY;
+                
+                // 应用重力
+                particle.velocityY += particle.gravity;
+                
+                // 应用阻力
+                particle.velocityX *= particle.resistance;
+                particle.velocityY *= particle.resistance;
+                
+                // 衰减
+                particle.alpha -= particle.decay;
+                particle.size *= 0.99;
+                
+                // 移除消失的粒子
+                if (particle.alpha <= 0.05 || particle.size <= 0.1) {
+                    this.particles.splice(index, 1);
+                }
+            }
+            
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                // 清空画布
+                this.ctx.globalCompositeOperation = 'destination-out';
+                this.ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.ctx.globalCompositeOperation = 'lighter';
+                
+                // 更新和绘制烟花
+                for (let i = this.fireworks.length - 1; i >= 0; i--) {
+                    this.updateFirework(this.fireworks[i], i);
+                    this.drawFirework(this.fireworks[i]);
+                }
+                
+                // 更新和绘制粒子
+                for (let i = this.particles.length - 1; i >= 0; i--) {
+                    this.updateParticle(this.particles[i], i);
+                    this.drawParticle(this.particles[i]);
+                }
+                
+                // 限制器，控制烟花创建频率
+                if (this.limiterTick >= this.limiterTotal) {
+                    // 农历新年期间增加烟花频率
+                    const frequency = isLunarNewYearPeriod() ? 0.1 : 0.03;
+                    
+                    if (Math.random() < frequency) {
+                        this.createFirework();
+                        this.limiterTick = 0;
+                    }
+                } else {
+                    this.limiterTick++;
+                }
+                
+                // 增加色调
+                this.hue += 0.5;
+            }
+        }
+        
         // 更新人品值显示
         document.addEventListener('DOMContentLoaded', function() {
             const luck = getDailyLuck();
@@ -1652,29 +1434,28 @@
                 luckElement.style.color = '#e74c3c'; // 红色
             }
             
-            // 农历新年期间使用金色显示高人品值
-            if (isLunarNewYearPeriod() && luck >= 70) {
-                luckElement.style.color = 'var(--lunar-gold)';
-                luckElement.style.textShadow = '0 0 5px rgba(255, 215, 0, 0.5)';
-            }
-            
             // 初始化回声洞
             initEcho();
             
-            // 如果在新年期间，添加农历新年祝福语到回声洞
+            // 如果在新年期间，启动烟花效果
             if (isLunarNewYearPeriod()) {
+                new Fireworks();
+                
+                // 添加农历新年祝福语到回声洞
                 setTimeout(() => {
                     const lunarNewYearMessages = [
-                        "🐉 2026农历新年快乐！",
-                        "🎊 龙年大吉，万事如意！",
-                        "🧧 恭喜发财，红包拿来！",
-                        "🍊 大吉大利，年年有余！",
-                        "🏮 张灯结彩，喜迎新春！",
-                        "🎆 烟花绽放，新年吉祥！",
-                        "🥟 阖家团圆，幸福美满！",
-                        "💰 财源广进，步步高升！",
-                        "🍬 甜甜蜜蜜，生活美满！",
-                        "🎇 爆竹声中一岁除！"
+                        "🐉 龙年大吉！",
+                        "🎉 2026新年快乐！",
+                        "✨ 万事如意！",
+                        "💰 恭喜发财！",
+                        "🍊 大吉大利！",
+                        "🏮 红红火火！",
+                        "🎊 阖家欢乐！",
+                        "🥟 年年有余！",
+                        "🎇 龙马精神！",
+                        "🧧 福星高照！",
+                        "🎐 吉祥如意！",
+                        "🌟 岁岁平安！"
                     ];
                     
                     // 将农历新年祝福语添加到回声洞消息中
@@ -1711,9 +1492,10 @@
                     console.error('加载回声洞消息失败:', error);
                     // 如果加载失败，使用默认消息
                     window.echoMessages = [
-                        "点击获取农历新年祝福",
-                        "2026农历新年快乐",
-                        "龙年大吉，万事如意"
+                        "新年快乐！",
+                        "万事如意！",
+                        "恭喜发财！",
+                        "点击获取更多祝福"
                     ];
                 });
             
@@ -1763,7 +1545,7 @@
                 
                 // 农历新年期间使用金色涟漪
                 if (isLunarNewYearPeriod()) {
-                    ripple.style.background = 'rgba(255, 215, 0, 0.5)';
+                    ripple.style.background = 'rgba(241, 196, 15, 0.5)';
                 }
                 
                 echoDisplay.appendChild(ripple);
