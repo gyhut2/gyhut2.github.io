@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="images/Avatar.png">
+    <title>xy's Bookmarks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .main-nav {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+        }
+        .main-nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        .main-nav li {
+            margin: 0 12px;
+        }
+        .main-nav a {
+            color: #2563eb;
+            font-weight: 600;
+            font-size: 1em;
+            text-decoration: none;
+            padding: 12px 0;
+            display: block;
+            transition: color 0.2s;
+        }
+        .main-nav a:hover {
+            color: #ff7e5f;
+            border-bottom: 2px solid #ff7e5f;
+        }
+        body {
+            background: #f7f7fa;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+            color: #222;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3498db;
+            text-decoration: none;
+        }
+        
+        .favorites-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .favorites-menu li {
+            margin-left: 20px;
+        }
+        
+        .favorites-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+        
+        .favorites-menu a:hover {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        header {
+            background: linear-gradient(90deg, #ffbc4f 0%, #6ed6ff 100%);
+            color: #fff;
+            padding: 32px 0 16px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        main {
+            max-width: 900px;
+            margin: 32px auto 0 auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            margin-top: 0;
+        }
+        h1 {
+            font-size: 2.5em;
+            letter-spacing: 2px;
+        }
+        h2 {
+            font-size: 1.3em;
+            margin-bottom: 24px;
+        }
+        h3 {
+            font-size: 1.1em;
+            margin: 32px 0 12px 0;
+            color: #45597e;
+            border-left: 4px solid #45597e;
+            padding-left: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        h3:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+            padding-left: 12px;
+        }
+        h3::before {
+            content: "▶";
+            margin-right: 8px;
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+        h3.expanded::before {
+            transform: rotate(90deg);
+        }
+        h4 {
+            font-size: 1.1em;
+            margin: 32px 0 12px 0;
+            color: #45597e;
+            border-left: 4px solid #45597e;
+            padding-left: 8px;
+        }
+        dl {
+            margin: 0 0 24px 0;
+            padding: 0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        dt {
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        a:hover {
+            color: #ff7e5f;
+            text-decoration: underline;
+        }
+        .folder {
+            margin-bottom: 24px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        .subfolder {
+            margin-left: 24px;
+            margin-bottom: 12px;
+        }
+        ul, li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 折叠/展开动画 */
+        .collapsed dl {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        .expanded dl {
+            max-height: 2000px;
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .main-nav ul {
+                flex-direction: column;
+            }
+            .main-nav li {
+                margin: 4px 0;
+            }
+            .favorites-menu {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .favorites-menu li {
+                margin: 5px 8px;
+            }
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .favorites-menu a {
+                font-size: 0.85em;
+                padding: 6px 10px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            main {
+                padding: 16px 4px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h3 {
+                font-size: 1em;
+                margin: 24px 0 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏开始 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">xy's Bookmarks</a>
+            <ul class="favorites-menu">
+                <li><a href="https://gyhut2.github.io/" target="_blank">主页</a></li>
+                <li><a href="https://github.com/gyhut2" target="_blank">GitHub</a></li>
+                <li><a href="https://hellogithub.com/" target="_blank">HelloGitHub</a></li>
+                <li><a href="https://gyhut2.github.io/htmlcleaner.html" target="_blank">书签清理</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <h1>xy's Bookmarks</h1>
+        <h2>
+            <a href="https://github.com/gyhut2/gyhut2.github.io" target="_blank">点点star</a>
+        </h2>
+    </header>
+    
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#收藏夹栏">收藏夹栏</a></li>
+            <li><a href="#系统工具">系统工具</a></li>
+            <li><a href="#Minecraft">Minecraft</a></li>
+            <li><a href="#Github">Github</a></li>
+            <li><a href="#FreeGame">免费游戏</a></li>
+            <li><a href="#LXMusic">LX音乐</a></li>
+            <li><a href="#OtherMusic">其他音乐</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div style="text-align:center;margin-bottom:24px;">
+            <input type="text" id="searchInput" placeholder="搜索书签..." style="width:60%;padding:8px;font-size:1em;border-radius:8px;border:1px solid #ccc;">
+            <div style="margin-top:12px;">
+                <a href="https://gyhut2.github.io/rs.html" target="_blank" style="color:#25ebd7;font-size:1.1em;text-decoration:none;">随机？</a>
+            </div>
+        </div>
+
+        <!-- 收藏夹栏 -->
+        <div class="folder">
+            <h3 id="收藏夹栏">收藏夹栏</h3>
+            <dl>
+                <dt><a href="https://www.bilibili.com/video/BV1pgqbYJE19/" target="_blank">Windows 11 官方宣传片</a></dt>
+                <dt><a href="https://www.mcnav.net/" target="_blank">MCNav | MC导航网</a></dt>
+                <dt><a href="https://www.qiwangming.com/hxw/" target="_blank">火星文转换器</a></dt>
+                <dt><a href="https://mail.163.com/" target="_blank">163网易免费邮</a></dt>
+                <dt><a href="https://hellogithub.com/" target="_blank">HelloGitHub</a></dt>
+                <dt><a href="https://www.bilibili.com/" target="_blank">哔哩哔哩</a></dt>
+                <dt><a href="https://www.bilibili.com/video/BV1oq4y1Z7uT/" target="_blank">《优势在我》</a></dt>
+                <dt><a href="https://www.bilibili.com/video/BV1uT4y1P7CX?p=2" target="_blank">【4K60帧】倒放版</a></dt>
+                <dt><a href="https://yiyan.baidu.com/" target="_blank">文心一言</a></dt>
+                <dt><a href="https://kimi.moonshot.cn/" target="_blank">Kimi Chat</a></dt>
+                <dt><a href="https://www.zbjdh.com/" target="_blank">猪八戒导航</a></dt>
+                <dt><a href="https://map.baidu.com/" target="_blank">百度地图</a></dt>
+                <dt><a href="https://dailybing.com/" target="_blank">每日必应壁纸</a></dt>
+                <dt><a href="https://www.tiangong.cn/" target="_blank">天工AI</a></dt>
+                <dt><a href="https://lkssite.vip/" target="_blank">LKs 网站推荐</a></dt>
+                <dt><a href="https://www.lzpanx.com/" target="_blank">懒盘搜索</a></dt>
+                <dt><a href="https://youquhome.com/page/1/" target="_blank">有趣网址之家</a></dt>
+                <dt><a href="https://www.cheatengine.org/" target="_blank">Cheat Engine</a></dt>
+                <dt><a href="https://cli.im/deqr" target="_blank">草料二维码解码器</a></dt>
+                <dt><a href="https://www.soon321.com/" target="_blank">软件下载网</a></dt>
+                <dt><a href="https://steamdb.info/search/" target="_blank">Search · SteamDB</a></dt>
+                <dt><a href="https://www.aigc.cn/favorites/searchengine" target="_blank">AI搜索引擎</a></dt>
+                <dt><a href="http://obs.cn/" target="_blank">OBSCN - 中文OBS教程</a></dt>
+                <dt><a href="https://www.wenshushu.cn/" target="_blank">文叔叔 - 传文件</a></dt>
+                <dt><a href="https://ollama.com/" target="_blank">Ollama</a></dt>
+                <dt><a href="https://bbs.steamtools.net/" target="_blank">SteamTools论坛</a></dt>
+                <dt><a href="https://so.252035.xyz/" target="_blank">PanSou 盘搜</a></dt>
+                <dt><a href="https://buyanbuyan.com/" target="_blank">不言不厌</a></dt>
+                <dt><a href="https://carrilson.com/?id=7" target="_blank">铁路软件</a></dt>
+                <dt><a href="https://www.zh-sora.com/" target="_blank">Sora官网</a></dt>
+                <dt><a href="https://paywallbuster.com/" target="_blank">Remove Paywalls</a></dt>
+                <dt><a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a></dt>
+                <dt><a href="https://www.aigei.com/icon/class/" target="_blank">图标下载 - 爱给网</a></dt>
+                <dt><a href="https://www.freedownloadmanager.org/zh/" target="_blank">Free Download Manager</a></dt>
+                <dt><a href="https://www.ico51.cn/" target="_blank">在线生成透明ICO图标</a></dt>
+                <dt><a href="https://www.yyczxt.com/" target="_blank">又要重装系统站</a></dt>
+                <dt><a href="https://goblin.tools/Formalizer" target="_blank">格式器- GoblinTools</a></dt>
+                <dt><a href="https://txstc55.github.io/ugly-avatar/" target="_blank">Ugly Avatar</a></dt>
+                <dt><a href="https://mirrors.tuna.tsinghua.edu.cn/#" target="_blank">清华大学开源软件镜像站</a></dt>
+                <dt><a href="https://app.sr-studio.cn/" target="_blank">SR思锐</a></dt>
+                <dt><a href="https://fontawesome.com/search#icongrid" target="_blank">Font Awesome 图标搜索</a></dt>
+                <dt><a href="https://github.com/CapSoftware/Cap" target="_blank">Cap - GitHub</a></dt>
+                <dt><a href="https://github.com/siddharthvaddem/openscreen" target="_blank">OpenScreen - GitHub</a></dt>
+                <dt><a href="https://steamcici.com/index.html" target="_blank">SteamCiCi</a></dt>
+            </dl>
+        </div>
+
+        <!-- 系统工具 -->
+        <div class="folder">
+            <h3 id="系统工具">系统工具</h3>
+            <dl>
+                <dt><a href="https://tjy-gitnub.github.io/win12/desktop.html" target="_blank">Windows 12 网页版</a></dt>
+                <dt><a href="https://www.52pojie.cn/forum.php" target="_blank">吾爱破解</a></dt>
+                <dt><a href="https://greenvideo.cc/" target="_blank">GreenVideo视频下载</a></dt>
+                <dt><a href="https://www.w3school.com.cn/" target="_blank">w3school 在线教程</a></dt>
+                <dt><a href="https://zhouql.vip/bilibili/" target="_blank">B站视频下载工具</a></dt>
+                <dt><a href="https://goblin.tools/Formalizer" target="_blank">格式器- GoblinTools</a></dt>
+                <dt><a href="https://texttospeech.im/zh-CN" target="_blank">Text to Speech.im</a></dt>
+                <dt><a href="https://www.jianpianpc.com/" target="_blank">荐片播放器PC官网</a></dt>
+                <dt><a href="https://taira-komori.jpn.org/freesoundcn.html" target="_blank">小森平的免费下载音效</a></dt>
+                <dt><a href="https://www.freeconvert.com/zh/" target="_blank">Online Converter</a></dt>
+                <dt><a href="https://www.cilixiong.com/" target="_blank">磁力熊 - 豆瓣高分电影下载</a></dt>
+                <dt><a href="https://pidoutv.com/" target="_blank">新媒派 | 运营工具导航</a></dt>
+                <dt><a href="https://fish.audio/zh-CN/" target="_blank">Fish Audio</a></dt>
+                <dt><a href="https://potplayer.tv/?lang=zh_CN" target="_blank">Global Potplayer</a></dt>
+                <dt><a href="https://pan.huang1111.cn/" target="_blank">huang1111网盘</a></dt>
+                <dt><a href="https://mxfree.ao-x.ac.cn/chi/" target="_blank">慕讯公益加速器</a></dt>
+                <dt><a href="https://neat-download-manager.fileplanet.com/download" target="_blank">Neat Download Manager</a></dt>
+                <dt><a href="https://wangchujiang.com/free-font/" target="_blank">Free Font - 商用免费字体</a></dt>
+                <dt><a href="https://www.iudesk.com/" target="_blank">Photo Editor by dev.macgyver</a></dt>
+                <dt><a href="https://www.itlooker.cn/" target="_blank">IT技术视界</a></dt>
+                <dt><a href="https://www.neatdownloadmanager.com/index.php/en/" target="_blank">Neat Download Manager</a></dt>
+                <dt><a href="https://blackace.app/" target="_blank">BlackACE 黑桃A</a></dt>
+                <dt><a href="https://www.ruancang.net/" target="_blank">软仓 | RuanCang.Net</a></dt>
+                <dt><a href="https://www.dogfight360.com/blog/18682/" target="_blank">Steamcommunity 302</a></dt>
+                <dt><a href="http://www.tuxingis.com/locaspace.html" target="_blank">图新地球 LSV</a></dt>
+                <dt><a href="https://file.cnxiaobai.com/Windows/" target="_blank">Windows工具</a></dt>
+                <dt><a href="https://otp.landian.vip/zh-cn/" target="_blank">Office Tool Plus</a></dt>
+                <dt><a href="https://github.com/eythaann/Seelen-UI" target="_blank">Seelen-UI Windows桌面美化</a></dt>
+                <dt><a href="https://os.click/en" target="_blank">Download the ISO</a></dt>
+                <dt><a href="https://lightframe.vilinko.com/" target="_blank">Vilinko LightFrame</a></dt>
+                <dt><a href="https://epcdiy.org/" target="_blank">epcsoft的后花园</a></dt>
+                <dt><a href="https://github.com/ntdevlabs/tiny11builder" target="_blank">tiny11builder - GitHub</a></dt>
+                <dt><a href="https://github.com/MustardChef/WSABuilds" target="_blank">WSABuilds - GitHub</a></dt>
+            </dl>
+        </div>
+
+        <!-- Minecraft -->
+        <div class="folder">
+            <h3 id="Minecraft">Minecraft</h3>
+            <dl>
+                <dt><a href="https://zh.minecraft.wiki/" target="_blank">中文 Minecraft Wiki</a></dt>
+                <dt><a href="https://classic.minecraft.net/" target="_blank">Minecraft Classic</a></dt>
+                <dt><a href="https://modrinth.com/mods" target="_blank">Modrinth</a></dt>
+                <dt><a href="https://www.curseforge.com/minecraft" target="_blank">CurseForge</a></dt>
+                <dt><a href="https://www.mcmod.cn/" target="_blank">MC百科</a></dt>
+                <dt><a href="https://aternos.org/servers/" target="_blank">Aternos免费服务器</a></dt>
+                <dt><a href="https://alist.8mi.tech/" target="_blank">八蓝米科技 AList</a></dt>
+                <dt><a href="https://www.mineimatorchina.com/" target="_blank">Mine-imator中文站</a></dt>
+                <dt><a href="https://klpbbs.com/forum.php" target="_blank">苦力怕论坛</a></dt>
+                <dt><a href="https://www.minebbs.com/resources/" target="_blank">MineBBS 我的世界中文论坛</a></dt>
+                <dt><a href="https://resourcepack.net/" target="_blank">Resource Packs</a></dt>
+                <dt><a href="https://getmc.zip/#/" target="_blank">GetMC</a></dt>
+                <dt><a href="https://mcreator.net/" target="_blank">MCreator</a></dt>
+                <dt><a href="https://www.mcshuo.com/" target="_blank">McFun论坛</a></dt>
+                <dt><a href="https://bbs.mcutc.cn/resources/" target="_blank">MCUTCBBS</a></dt>
+                <dt><a href="https://opennbs.org/" target="_blank">Open Note Block Studio</a></dt>
+                <dt><a href="https://www.midishow.com/" target="_blank">MidiShow</a></dt>
+                <dt><a href="https://www.9minecraft.net/" target="_blank">9Minecraft</a></dt>
+                <dt><a href="https://fcl-team.github.io/index.html" target="_blank">折叠艇发射器</a></dt>
+                <dt><a href="https://fpsmaster.top/inst" target="_blank">FPSMaster客户端</a></dt>
+                <dt><a href="https://autosaved.org/Spritecraft" target="_blank">Spritecraft像素艺术生成器</a></dt>
+                <dt><a href="https://qcymc.net/" target="_blank">青草原MC社区</a></dt>
+                <dt><a href="https://www.minecraftzw.com/" target="_blank">我的世界中文站</a></dt>
+                <dt><a href="https://hmcl.huangyuhui.net/" target="_blank">Hello Minecraft! Launcher</a></dt>
+                <dt><a href="https://www.mtrbbs.top/" target="_blank">MTRBBS 铁路中文论坛</a></dt>
+                <dt><a href="https://imc.cab/" target="_blank">远古mc</a></dt>
+                <dt><a href="https://www.xhcity.top/wiki/%E9%A6%96%E9%A1%B5" target="_blank">星海市轨道交通建设</a></dt>
+                <dt><a href="https://mccag.cn/" target="_blank">可爱头像生成器</a></dt>
+                <dt><a href="https://kqakqakqa.github.io/utf-block-sign-art/" target="_blank">方块字标志牌生成器</a></dt>
+                <dt><a href="https://gaming.lenovo.com/game-key-drops/post/paused-human-fall-flat---key-drops-S0BsJKfIHWPuqG4" target="_blank">Human Fall Flat - Key Drops</a></dt>
+                <dt><a href="https://pixelmap.minegraph.cn/" target="_blank">像素茶艺地图站</a></dt>
+                <dt><a href="https://github.com/louis-e/arnis" target="_blank">GitHub - arnis</a></dt>
+                <dt><a href="https://github.com/IdreesInc/Monocraft" target="_blank">GitHub - Monocraft</a></dt>
+                <dt><a href="https://github.com/PCL-Community/PCL2-CE" target="_blank">PCL2 社区版 - GitHub</a></dt>
+                <dt><a href="https://pcl-community.github.io/PCL2-CE-Web/" target="_blank">PCL2 社区版</a></dt>
+                <dt><a href="https://corona.studio/" target="_blank">Corona Studio</a></dt>
+                <dt><a href="https://forums.computercraft.cc/" target="_blank">ComputerCraft Forums</a></dt>
+                <dt><a href="https://xiaoce.fun/mcitem" target="_blank">Minecraft猜物</a></dt>
+                <dt><a href="https://downloads.khinsider.com/game-soundtracks/album/minecraft" target="_blank">Minecraft Soundtrack</a></dt>
+                <dt><a href="https://panel.chmlfrp.cn/tunnelm/manage" target="_blank">ChmlFrp端口映射</a></dt>
+                <dt><a href="https://docs.youming.v6.army/notes/MC-%E9%BC%A0%E6%A0%87%E6%8C%87%E9%92%88.html" target="_blank">MC 鼠标指针</a></dt>
+                <dt><a href="https://github.com/moeleak/connecttool-qt" target="_blank">ConnectTool-Qt - GitHub</a></dt>
+                
+                <!-- 材质 -->
+                <dt><h4>材质</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://meme.teahouse.team/" target="_blank">梗体中文 · 在线构建</a></dt>
+                    <dt><a href="https://resourcepack.net/modernarch-realism-resource-pack/" target="_blank">ModernArch 现实主义资源包</a></dt>
+                    <dt><a href="https://resourcepack.net/parallax-pbr-resource-pack/" target="_blank">视差 PBR 资源包</a></dt>
+                    <dt><a href="https://modrinth.com/resourcepack/rotrblocks" target="_blank">rotrBLOCKS</a></dt>
+                    <dt><a href="https://modrinth.com/resourcepack/stylista" target="_blank">Stylista [LabPBR]</a></dt>
+                    <dt><a href="https://modrinth.com/resourcepack/modernarch" target="_blank">ModernArch</a></dt>
+                    <dt><a href="https://modrinth.com/resourcepack/optimum-realism" target="_blank">Optimum Realism</a></dt>
+                    <dt><a href="https://ambientcg.com/" target="_blank">ambientCG - Free Textures</a></dt>
+                </dl>
+                
+                <!-- 整合包 -->
+                <dt><h4>整合包</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://doc.i9idc.com/docs/minecraftearth/mce3" target="_blank">MC地球2 整合包</a></dt>
+                    <dt><a href="https://yuushya.com/townscape/" target="_blank">Yuushya - Minecraft 建筑系列</a></dt>
+                    <dt><a href="https://www.mcmod.cn/modpack/833.html" target="_blank">空岛汉堡店</a></dt>
+                    <dt><a href="https://bbsmc.net/modpack/purecreate6.0" target="_blank">机械动力6.0整合</a></dt>
+                    <dt><a href="https://github.com/Altnoir/PoopSkyMod" target="_blank">空中厕所2</a></dt>
+                    <dt><a href="https://www.mcmod.cn/modpack/885.html" target="_blank">路网通途</a></dt>
+                </dl>
+                
+                <!-- mods -->
+                <dt><h4>Mods</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://www.mcmod.cn/class/10088.html" target="_blank">Public Transport Mod</a></dt>
+                    <dt><a href="https://www.mcmod.cn/class/14045.html" target="_blank">我的城市 (City Mod)</a></dt>
+                    <dt><a href="https://www.mcmod.cn/class/12733.html" target="_blank">TrafficCraft</a></dt>
+                    <dt><a href="https://www.mcmod.cn/class/7194.html" target="_blank">真实城市建设模组</a></dt>
+                    <dt><a href="https://www.mcmod.cn/class/9233.html" target="_blank">道路中国</a></dt>
+                    <dt><a href="https://modrinth.com/mod/splinecart" target="_blank">Splinecart</a></dt>
+                    <dt><a href="http://ytedocs.yunzhu.host/zh/" target="_blank">云竹交通</a></dt>
+                    <dt><a href="https://modrinth.com/mod/immersive-furniture" target="_blank">Immersive Furniture</a></dt>
+                    <dt><a href="https://modrinth.com/mod/clicksigns" target="_blank">Click Signs</a></dt>
+                    <dt><a href="https://modrinth.com/mod/geng" target="_blank">Geng: Chinese Meme Craft</a></dt>
+                </dl>
+                
+                <!-- shaders -->
+                <dt><h4>Shaders</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://minegraph.cn/shaderpacks/12" target="_blank">iterationT - Java版光影包</a></dt>
+                    <dt><a href="https://download.minegraph.cn/derivative/" target="_blank">Derivative - 光影下载</a></dt>
+                </dl>
+                
+                <!-- maps -->
+                <dt><h4>Maps</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://modrinth.com/datapack/randomisland" target="_blank">Random Island</a></dt>
+                    <dt><a href="https://www.planetminecraft.com/project/gta-v-in-minecraft-12288x12288-blocks-massive-project/" target="_blank">Minecraft 中的 GTA V</a></dt>
+                    <dt><a href="https://www.greenfieldmc.net/" target="_blank">greenfield Home Page</a></dt>
+                    <dt><a href="https://www.mcappx.com/index.html" target="_blank">MCAPPX 版本库</a></dt>
+                </dl>
+            </dl>
+        </div>
+
+        <!-- Github -->
+        <div class="folder">
+            <h3 id="Github">Github</h3>
+            <dl>
+                <dt><a href="https://github.com/" target="_blank">GitHub</a></dt>
+                <dt><a href="https://github.akams.cn/" target="_blank">Github Proxy 文件代理加速</a></dt>
+                <dt><a href="https://github.com/lalakii/MouseClickTool" target="_blank">MouseClickTool - GitHub</a></dt>
+                <dt><a href="https://github.com/Teahouse-Studios/mcwzh-meme-resourcepack/releases" target="_blank">梗体中文资源包 Releases</a></dt>
+                <dt><a href="https://github.com/xuanli199/weekly" target="_blank">玄离199每周科技补全</a></dt>
+                <dt><a href="https://github.com/521xueweihan/HelloGitHub" target="_blank">HelloGitHub</a></dt>
+                <dt><a href="https://github.com/pjy612/SteamManifestCache/releases/tag/Free" target="_blank">SAI Free · SteamManifestCache</a></dt>
+                <dt><a href="https://github.com/BlankTMing/ManifestAutoUpdate/releases/tag/Steam_%E5%85%A5%E5%BA%93" target="_blank">Steam入库助手</a></dt>
+                <dt><a href="https://github.com/Tichau/FileConverter" target="_blank">FileConverter</a></dt>
+                <dt><a href="https://github.com/zhongyang219/TrafficMonitor" target="_blank">TrafficMonitor</a></dt>
+                <dt><a href="https://github.com/obsproject/obs-studio" target="_blank">OBS Studio</a></dt>
+                <dt><a href="https://github.com/brunodev85/winlator/releases/tag/v7.1.0" target="_blank">Winlator</a></dt>
+                <dt><a href="https://yinxin630.github.io/fiora/" target="_blank">fiora - 开源聊天应用</a></dt>
+                <dt><a href="https://github.com/vladelaina/Catime" target="_blank">Catime - 番茄时钟</a></dt>
+                <dt><a href="https://github.com/shrimqy/Sefirah" target="_blank">Sefirah - Phone Link替代</a></dt>
+                <dt><a href="http://mc.alger.fun/#/" target="_blank">网抑云音乐</a></dt>
+                <dt><a href="https://github.com/kuroni/bongocat-osu" target="_blank">Bongo Cat 原版</a></dt>
+                <dt><a href="https://github.com/PKUFlyingPig/cs-self-learning" target="_blank">计算机自学指南</a></dt>
+                <dt><a href="https://github.com/fmhy/FMHY/wiki/FREEMEDIAHECKYEAH" target="_blank">FREEMEDIAHECKYEAH</a></dt>
+                <dt><a href="https://github.com/TranslucentTB/TranslucentTB/releases/tag/2025.1" target="_blank">TranslucentTB 2025.1</a></dt>
+                <dt><a href="https://github.com/game1024/OpenSpeedy" target="_blank">OpenSpeedy - 游戏变速器</a></dt>
+                <dt><a href="https://github.com/zyedidia/eget" target="_blank">eget - 安装GitHub二进制文件</a></dt>
+                <dt><a href="https://github.com/pages-cms/pages-cms" target="_blank">pages-cms - 静态站点CMS</a></dt>
+                <dt><a href="https://github.com/SteamRE/DepotDownloader" target="_blank">DepotDownloader - Steam库下载器</a></dt>
+                <dt><a href="https://github.com/windows-ui/HyperDroid" target="_blank">HyperDroid</a></dt>
+                <dt><a href="https://github.com/BlueAmulet/GreenLuma-2025-Manager" target="_blank">GreenLuma-2025-Manager</a></dt>
+                
+                <!-- Schedule -->
+                <dt><h4>课表/日程</h4></dt>
+                <dl class="subfolder">
+                    <dt><a href="https://github.com/EnderWolf006/ElectronClassSchedule/releases/tag/latest" target="_blank">ElectronClassSchedule</a></dt>
+                    <dt><a href="https://github.com/ClassIsland/ClassIsland" target="_blank">ClassIsland</a></dt>
+                    <dt><a href="https://classisland.tech/download" target="_blank">下载 ClassIsland</a></dt>
+                    <dt><a href="https://cw.rinlit.cn/" target="_blank">Class Widgets | 全新桌面课表</a></dt>
+                    <dt><a href="https://jursin.github.io/Awesome-Class-Softwares-Web/" target="_blank">Awesome-Class-Softwares</a></dt>
+                    <dt><a href="https://forum.smart-teach.cn/" target="_blank">智教联盟论坛</a></dt>
+                    <dt><a href="https://github.com/examaware/ExamSchedule" target="_blank">ExamSchedule - 考试看板</a></dt>
+                    <dt><a href="https://github.com/QQHKX/immersive-clock" target="_blank">immersive-clock</a></dt>
+                </dl>
+            </dl>
+        </div>
+
+        <!-- Free Game -->
+        <div class="folder">
+            <h3 id="FreeGame">免费游戏</h3>
+            <dl>
+                <dt><a href="https://www.shaqzone.com/" target="_blank">资源共享站shaqzone</a></dt>
+                <dt><a href="https://passer-by.com/pacman/" target="_blank">Pac-Man . 吃豆人游戏</a></dt>
+                <dt><a href="https://slowroads.io/" target="_blank">slow roads</a></dt>
+                <dt><a href="https://ohminesweeper.online/" target="_blank">扫雷游戏在线</a></dt>
+                <dt><a href="https://neal.fun/password-game/" target="_blank">The Password Game</a></dt>
+                <dt><a href="https://neal.fun/" target="_blank">Neal.fun</a></dt>
+                <dt><a href="https://poki.com/zh" target="_blank">Poki (宝玩)</a></dt>
+                <dt><a href="https://www.crazygames.com/" target="_blank">CrazyGames</a></dt>
+                <dt><a href="https://lines.frvr.com/" target="_blank">Lines FRVR</a></dt>
+                <dt><a href="https://www.return8090.com/gbaonline/" target="_blank">任天堂GBA经典游戏在线玩</a></dt>
+                <dt><a href="https://supermario.net/zh/" target="_blank">在线玩超级马里奥游戏</a></dt>
+                <dt><a href="https://www.emu666.com/" target="_blank">在线模拟器游戏 | EMU666</a></dt>
+                <dt><a href="https://liferestart.syaro.io/public/index.html" target="_blank">Life Restart</a></dt>
+                <dt><a href="https://www.pcstory.fun/" target="_blank">pcstory.fun</a></dt>
+                <dt><a href="https://itch.io/" target="_blank">itch.io</a></dt>
+                <dt><a href="https://unblockedescaperoads.com/#game" target="_blank">Escape Road Unblocked</a></dt>
+                <dt><a href="https://subway-surfers.gg/zh-CN/default_game" target="_blank">Subway Surfers（地铁跑酷）</a></dt>
+                <dt><a href="https://leveldevil.vip/zh" target="_blank">Level Devil</a></dt>
+                <dt><a href="https://juij.fun/" target="_blank">非线性列车</a></dt>
+                <dt><a href="https://www.jazzvswaffles.com/" target="_blank">Jazz vs Waffles</a></dt>
+                <dt><a href="https://www.euclidea.xyz/en/game/" target="_blank">Euclidea</a></dt>
+                <dt><a href="https://tuxun.fun/" target="_blank">图寻 - 探索世界</a></dt>
+                <dt><a href="https://nodtotherhythm.com/make" target="_blank">跟着节奏点头</a></dt>
+                <dt><a href="https://www.oldmantvg.net/" target="_blank">老男人游戏网</a></dt>
+                <dt><a href="https://yant.top/" target="_blank">言庭资源分享</a></dt>
+                <dt><a href="https://chishenme.xyz/" target="_blank">中午吃什么</a></dt>
+                <dt><a href="https://gametame.com/?join=2416979" target="_blank">GameTame.com</a></dt>
+                <dt><a href="https://msbt.seku.su/" target="_blank">呃嗯！呼～❤呃啊～哼！！呃嗯哈嗯～啊</a></dt>
+                <dt><a href="https://viggle.ai/m-home" target="_blank">Viggle AI</a></dt>
+                <dt><a href="https://www.gamer520.com/" target="_blank">Switch520</a></dt>
+                <dt><a href="https://jdenticon.com/" target="_blank">Jdenticon - 头像生成器</a></dt>
+                <dt><a href="https://osu.ppy.sh/" target="_blank">osu</a></dt>
+                <dt><a href="https://github.com/imwaitingnow/WorkshopDL" target="_blank">WorkshopDL - Steam Workshop下载器</a></dt>
+                <dt><a href="https://github.com/zfonlyone/unlock_steam" target="_blank">unlock_steam - GitHub</a></dt>
+                <dt><a href="https://byrutgame.org/" target="_blank">Byrut Game</a></dt>
+            </dl>
+        </div>
+
+        <!-- LX Music -->
+        <div class="folder">
+            <h3 id="LXMusic">LX音乐</h3>
+            <dl>
+                <dt><a href="https://github.com/lyswhut/lx-music-desktop" target="_blank">lx-music-desktop - GitHub</a></dt>
+                <dt><a href="https://docs.lxmusic.top/" target="_blank">LX Music 文档</a></dt>
+                <dt><a href="https://www.alipan.com/s/2eZxiWJRMrH/folder/64c36df4368b4365344f4e2ba601b86abf2d7f07" target="_blank">落雪音源</a></dt>
+                <dt><a href="https://www.sixyin.com/" target="_blank">六音</a></dt>
+                <dt><a href="https://6yso.com/" target="_blank">六音软件永久地址发布页</a></dt>
+                <dt><a href="https://www.sixyin.com/8498.html" target="_blank">洛雪音乐助手+六音自定义音源</a></dt>
+                <dt><a href="https://soso.lanzouw.com/b0fobnkyd#bznu" target="_blank">洛雪音乐助手自定义Cookie版本</a></dt>
+                <dt><a href="https://github.com/lyswhut/lx-music-desktop/releases" target="_blank">lx-music-desktop Releases</a></dt>
+                <dt><a href="https://gitcode.com/guoyue2010/lxmusic-" target="_blank">LXMusic音源 - GitCode</a></dt>
+                <dt><a href="https://github.com/piko017/-LX-luoxue_yinyuan" target="_blank">洛雪LX音乐音源 - GitHub</a></dt>
+            </dl>
+        </div>
+
+        <!-- Other Music -->
+        <div class="folder">
+            <h3 id="OtherMusic">其他音乐</h3>
+            <dl>
+                <dt><a href="https://www.mefcl.com/musictools/542" target="_blank">音乐试听下载器MusicTools</a></dt>
+                <dt><a href="http://fonger.top/" target="_blank">方格音乐</a></dt>
+                <dt><a href="https://flac.life/" target="_blank">无损生活</a></dt>
+                <dt><a href="https://cdkm.com/cn/cut-audio" target="_blank">在线剪切音频</a></dt>
+                <dt><a href="https://github.com/imsyy/SPlayer/releases" target="_blank">SPlayer Releases</a></dt>
+                <dt><a href="https://github.com/iAJue/MoeKoeMusic" target="_blank">MoeKoeMusic - 酷狗第三方客户端</a></dt>
+                <dt><a href="https://github.com/AZ-Studio-2023/AZMusicDownloader/releases/tag/v2.5.0" target="_blank">AZ音乐下载器</a></dt>
+                <dt><a href="https://music.gimhoy.com/list" target="_blank">Gimhoy音乐盘</a></dt>
+            </dl>
+        </div>
+
+        <h4>Powered By XY</h4>
+        <h4>Lasted:2025/11/15</h4>
+    </main>
+
+    <script>
+        // 折叠功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为所有h3添加折叠功能
+            const h3Elements = document.querySelectorAll('h3');
+            
+            h3Elements.forEach(h3 => {
+                // 添加点击事件
+                h3.addEventListener('click', function() {
+                    // 切换展开/折叠状态
+                    this.classList.toggle('expanded');
+                    
+                    // 找到下一个兄弟元素，直到找到dl
+                    let nextElement = this.nextElementSibling;
+                    while (nextElement && nextElement.tagName !== 'DL') {
+                        nextElement = nextElement.nextElementSibling;
+                    }
+                    
+                    if (nextElement) {
+                        // 切换父容器的类来控制折叠/展开
+                        const parentFolder = this.closest('.folder');
+                        if (parentFolder) {
+                            parentFolder.classList.toggle('collapsed');
+                            parentFolder.classList.toggle('expanded');
+                        }
+                    }
+                });
+                
+                // 默认展开所有部分
+                h3.classList.add('expanded');
+                const parentFolder = h3.closest('.folder');
+                if (parentFolder) {
+                    parentFolder.classList.add('expanded');
+                    parentFolder.classList.remove('collapsed');
+                }
+            });
+
+            // 搜索功能
+            document.getElementById('searchInput').addEventListener('input', function() {
+                const keyword = this.value.trim().toLowerCase();
+                // 获取所有书签链接
+                document.querySelectorAll('dt, h3, h4').forEach(function(item) {
+                    const text = item.textContent.toLowerCase();
+                    if (keyword === '' || text.includes(keyword)) {
+                        item.style.display = '';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                // 隐藏空的 dl
+                document.querySelectorAll('dl').forEach(function(dl) {
+                    const hasVisible = Array.from(dl.children).some(child => child.style.display !== 'none');
+                    dl.style.display = hasVisible ? '' : 'none';
+                });
+                // 隐藏空的 folder
+                document.querySelectorAll('.folder').forEach(function(folder) {
+                    const next = folder.nextElementSibling;
+                    if (next && next.style && next.style.display === 'none') {
+                        folder.style.display = 'none';
+                    } else {
+                        folder.style.display = '';
+                    }
+                });
+            });
+
+            // 为所有外部链接添加target="_blank"属性
+            const links = document.querySelectorAll('a[href^="http"]');
+            links.forEach(link => {
+                if (!link.hasAttribute('target')) {
+                    link.setAttribute('target', '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
